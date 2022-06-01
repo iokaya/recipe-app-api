@@ -17,3 +17,28 @@ services:
     # command to run the service
     command: >
       sh -c "python manage.py runserver 0.0.0.0:8000"
+    # environment
+    environment:
+      - DB_HOST:db
+      - DB_NAME:devdb
+      - DB_USER=devuser
+      - DB_PASSWORD:changeme
+    # depends on
+    depends_on:
+      - db
+  # db service
+  db:
+    # image
+    image: postgres:13-alpine
+    # volumes
+    volumes:
+      - dev-db-data:/var/lib/postgresql/data
+    # environment
+    environment:
+      - POSTGRES_DB=devdb
+      - POSTGRES_USER=devuser
+      - POSTGRES_PASSWORD=changeme
+# volumes
+volumes:
+  # dev db
+  dev-db-data: 
